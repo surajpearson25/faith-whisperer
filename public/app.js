@@ -117,7 +117,8 @@ async function loadMe() {
 }
 
 async function loadFeed() {
-  state.prayerFeed = await api(`/prayers?includeClosed=${state.includeClosed}`);
+  const prayers = await api(`/prayers?includeClosed=${state.includeClosed}`);
+  state.prayerFeed = prayers.filter((prayer) => prayer.requesterUserId !== state.me.id);
 }
 
 async function loadMyPrayers() {
